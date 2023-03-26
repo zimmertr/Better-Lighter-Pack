@@ -1,14 +1,13 @@
 import csv, os, sys
 from decimal import *
 
-tripPath=sys.argv[1] if len(sys.argv) > 1 else './trips/'
-tabulation="\n    "
+TRIP_PATH=sys.argv[1] if len(sys.argv) > 1 else './trips/'
+TABULATION="\n    "
 
 
 def parseCSV(file):
-    csvFile = open(file, "r")
-    csvData = list(csv.reader(csvFile, delimiter=","))
-    csvFile.close()
+    with open(file, "r") as csvFile:
+        csvData = list(csv.reader(csvFile))
     return csvData
 
 
@@ -18,24 +17,22 @@ def calcTotals(tripItems):
     food=0
 
     for item in tripItems:
-        isWorn = item[8]
-        isFood = item[9]
-        if isWorn.lower() != "":
-            worn += 1
-        elif isFood.lower() != "":
-            food += 1
-        else:
-            base += 1
+        isWorn = item[8].lower()
+        isFood = item[9].lower()
 
-    return( \
-        tabulation + "Total:   " + str(len(tripItems)) + \
-        tabulation + "Base:    " + str(base) + \
-        tabulation + "Worn:    " + str(worn) + \
-        tabulation + "Food:    " + str(food))
+        worn += bool(isWorn)
+        food += bool(isFood)
+        base += not isWorn and not isFood
+
+    return ( "\n" +
+        f"    Total:   {len(tripItems)}\n"
+        f"    Base:    {base}\n"
+        f"    Worn:    {worn}\n"
+        f"    Food:    {food}"
+    )
 
 
 def calcWeight(tripItems):
-    total=0
     base=0
     worn=0
     food=0
@@ -44,27 +41,28 @@ def calcWeight(tripItems):
     for item in tripItems:
         quantity = item[3]
         value = item[4]
-        isWorn = item[8]
-        isFood = item[9]
+        isWorn = item[8].lower()
+        isFood = item[9].lower()
 
-        if all(val != "" for val in [quantity, value]):
-            if isWorn.lower() != "":
+        if quantity and value:
+            if isWorn != "":
                 worn += int(quantity) * float(value)
-            elif isFood.lower() != "":
+            elif isFood != "":
                 food += int(quantity) * float(value)
             else:
                 base += int(quantity) * float(value)
         else:
             nullValues += 1
 
-        total = (base + worn + food)
+    total = base + worn + food
 
-    return ( \
-        tabulation + "Total:   " + gramsToLBS(total) + "lbs" + \
-        tabulation + "Base:    " + gramsToLBS(base) + "lbs" +  \
-        tabulation + "Worn:    " + gramsToLBS(worn) + "lbs" +  \
-        tabulation + "Food:    " + gramsToLBS(food) + "lbs" +  \
-        nullValueFormat(nullValues))
+    return ( 
+        TABULATION + f"Total:   {gramsToLBS(total)}lbs"
+        + TABULATION + f"Base:    {gramsToLBS(base)}lbs"
+        + TABULATION + f"Worn:    {gramsToLBS(worn)}lbs"
+        + TABULATION + f"Food:    {gramsToLBS(food)}lbs"
+        + nullValueFormat(nullValues)
+    )
 
 
 def calcCost(tripItems):
@@ -77,90 +75,91 @@ def calcCost(tripItems):
     for item in tripItems:
         quantity = item[3]
         value = item[7]
-        isWorn = item[8]
-        isFood = item[9]
+        isWorn = item[8].lower()
+        isFood = item[9].lower()
 
-        if all(val != "" for val in [quantity, value]):
-            if isWorn.lower() != "":
+        if quantity and value:
+            if isWorn:
                 worn += int(quantity) * Decimal(value)
-            elif isFood.lower() != "":
+            elif isFood:
                 food += int(quantity) * Decimal(value)
             else:
                 base += int(quantity) * Decimal(value)
         else:
             nullValues += 1
 
-        total = (base + worn + food)
+        total = base + worn + food
 
-    return ( \
-        tabulation + "Total:   " + "${:,.2f}".format(total) + \
-        tabulation + "Base:    " + "${:,.2f}".format(base) + \
-        tabulation + "Worn:    " + "${:,.2f}".format(worn) + \
-        tabulation + "Food:    " + "${:,.2f}".format(food) + \
-        nullValueFormat(nullValues))
+    return (
+        TABULATION + f"Total:   ${total:,.2f}"
+        + TABULATION + f"Base:    ${base:,.2f}"
+        + TABULATION + f"Worn:    ${worn:,.2f}"
+        + TABULATION + f"Food:    ${food:,.2f}"
+        + nullValueFormat(nullValues)
+    )
 
 
 def calcCategories(tripItems):
-    tmpList = {}
-    nullValues = 0
+    tmpList={}
+    resultList = ""
+    nullValues=0
 
     for item in tripItems:
         category = item[1]
-        if category not in tmpList:
-            tmpList[category] = 1
-        else:
-            tmpList[category] += 1
-
-    categoryList = [[category, count] for category, count in tmpList.items()]
-
-    resultList = ""
-    for result in categoryList:
-        resultList += tabulation + result[0] + ": " + str(result[1])
+        weight=item[4]
+        cost=item[7]        
         
-        categoryWeight = 0
-        categoryValue = 0
-        for item in tripItems:
-            if result[0] == item[1]:
-                if item[4] != "":
-                    categoryWeight += float(item[4])
-                if item[7] != "":
-                    categoryValue += Decimal(item[7])
+        if category not in tmpList:
+            tmpList[category] = {"count": 1, "weight": 0, "value": 0}
+        else:
+            tmpList[category]["count"] += 1
 
-        resultList += "\n        Weight:   " + gramsToLBS(categoryWeight) + "lbs"
-        resultList += "\n        Value:    " + "${:,.2f}".format(round(categoryValue,2))
+        if weight:
+            tmpList[category]["weight"] += float(weight)
+        if cost:
+            tmpList[category]["value"] += Decimal(cost)
+
+    for category, info in tmpList.items():
+        resultList += TABULATION + f"{category}: {info['count']}"
+        resultList += f"\n        Weight:   {gramsToLBS(info['weight'])}lbs"
+        resultList += f"\n        Value:    ${info['value']:,.2f}"
 
     return resultList
 
 
 def gramsToLBS(grams):
-    return str(round((float(grams) / 453.59237),2))
+    return format(float(grams) / 453.59237, ".2f")
 
 
 def nullValueFormat(value):
-    if value is not None and value > 0:
-        return tabulation + "\033[91mNo Data: " + str(value) + "\033[0m"
-    else:
-        return ""
+    if value and value > 0:
+        return f"{TABULATION}\033[91mNo Data: {value}\033[0m"
+    return ""
+
+
+def buildTripList(TRIP_PATH):
+    if os.path.isdir(TRIP_PATH):
+        return [(file, parseCSV(TRIP_PATH + file)) for file in os.listdir(TRIP_PATH)]
+    elif os.path.isfile(TRIP_PATH):
+        return [(TRIP_PATH, parseCSV(TRIP_PATH))]
+
+
+def calculateTrip(trip):
+    tripName, tripItems = trip
+    print("Trip: " + tripName)
+    print("\nTotal Items: " + calcTotals(tripItems))
+    print("\nTotal Weight: " + calcWeight(tripItems))
+    print("\nTotal Cost: " + calcCost(tripItems))
+    print("\nTotal Categories: " + calcCategories(tripItems))
+    print("-----------------------------------\n")
 
 
 def main():
-    listOfTrips = []
-
-    if os.path.isdir(tripPath):
-        for file in os.listdir(tripPath):
-            listOfTrips.append((file,parseCSV(tripPath + file)))
-    elif os.path.isfile(tripPath):
-        listOfTrips.append((tripPath,parseCSV(tripPath)))
+    listOfTrips = buildTripList(TRIP_PATH)
 
     for trip in listOfTrips:
-        tripName = trip[0]
-        tripItems = trip[1]
-        print("Trip: " + tripName)
-        print("\nTotal Items: " + calcTotals(tripItems))
-        print("\nTotal Weight: " + calcWeight(tripItems))
-        print("\nTotal Cost: " + calcCost(tripItems))
-        print("\nTotal Categories: " + calcCategories(tripItems))
-        print("-----------------------------------\n")
+        calculateTrip(trip)
+
 
 if __name__ == "__main__":
     main()
