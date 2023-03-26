@@ -126,8 +126,8 @@ def calcCategories(tripItems):
                 if item[7] != "":
                     categoryValue += Decimal(item[7])
 
-        resultList += "\n\tWeight:\t" + gramsToLBS(categoryWeight) + "lbs"
-        resultList += "\n\tValue:\t" + "${:,.2f}".format(round(categoryValue,2))
+        resultList += "\n        Weight:   " + gramsToLBS(categoryWeight) + "lbs"
+        resultList += "\n        Value:    " + "${:,.2f}".format(round(categoryValue,2))
 
     return resultList
 
@@ -156,10 +156,10 @@ def main():
         tripName = trip[0]
         tripItems = trip[1]
         print("Trip: " + tripName)
-        print("\nItems: " + calcTotals(tripItems))
-        print("\nWeight (lbs): " + calcWeight(tripItems))
-        print("\nCost: " + calcCost(tripItems))
-        print("\nCategories: " + calcCategories(tripItems))
+        print("\nTotal Items: " + calcTotals(tripItems))
+        print("\nTotal Weight: " + calcWeight(tripItems))
+        print("\nTotal Cost: " + calcCost(tripItems))
+        print("\nTotal Categories: " + calcCategories(tripItems))
         print("-----------------------------------\n")
 
 if __name__ == "__main__":
