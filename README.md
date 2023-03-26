@@ -11,9 +11,7 @@ I was frustrated with https://lighterpack.com so I made this CLI tool. Your expo
 1. Create a CSV file following this format. Reference examples in `./trips/` if necessary:
    ```csv
    Description: 	name,description,quantity,weight,unit,url,price,worn,consumable
-   Data Type:   	string,string,integer,float,integer,string,decimal,string,string
-   Requirement: 	optional,optional,required,required,n/a,n/a,required,optional,optional
-   Example: 	Sun Hat,Clothing,Outdoor Research Sombriolet,1,107.73,g,https://www.rei.com/product/112247/outdoor-research-sombriolet-sun-hat?sku=1122470011,31.49,Worn,
+   Example: 	Running Tights,Clothing,Nike Dri-Fit Challenger - L,1,259.97,g,https://www.nike.com/t/dri-fit-challenger-mens-running-tights-CF4RdW,60.00,Worn,
    ```
    
 2. Execute the script against a CSV file or directory containing CSV files:
