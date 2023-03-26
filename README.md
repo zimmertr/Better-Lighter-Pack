@@ -2,7 +2,7 @@
 
 ## Summary
 
-I was frustrated with https://ligherpack.com so I made this. Your exported ligherpack CSVs should be compatible. 
+I was frustrated with https://ligherpack.com so I made this CLI tool. Your exported ligherpack CSVs should be compatible. 
 
 <hr>
 
