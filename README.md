@@ -11,9 +11,9 @@ I was frustrated with https://ligherpack.com so I made this. Your exported lighe
 1. Create a CSV file following this format. Reference examples in `./trips/` if necessary:
    ```csv
    Description: 	name,description,quantity,weight,unit,url,price,worn,consumable
-   Data Type:   string,string,integer,float,integer,string,decimal,string,string
+   Data Type:   	string,string,integer,float,integer,string,decimal,string,string
    Requirement: 	optional,optional,required,required,n/a,n/a,required,optional,optional
-   Example: Sun Hat,Clothing,Outdoor Research Sombriolet,1,107.73,g,https://www.rei.com/product/112247/outdoor-research-sombriolet-sun-hat?sku=1122470011,31.49,Worn,
+   Example: 	Sun Hat,Clothing,Outdoor Research Sombriolet,1,107.73,g,https://www.rei.com/product/112247/outdoor-research-sombriolet-sun-hat?sku=1122470011,31.49,Worn,
    ```
    
 2. Execute the script against a CSV file or directory containing CSV files:
@@ -30,9 +30,8 @@ I was frustrated with https://ligherpack.com so I made this. Your exported lighe
 ## Example:
 
 ```shell
-Dir: /Users/tj/git/personal/BetterLighterPack [main] U
-Usr: tj - Sat 25,  7:22PM > docker run -it $(docker build -q .)
-Trip: Alpine_Lakes_Grand_Slam.csv
+$> python main.py trips/Alpine_Lakes_Grand_Slam.csv
+Trip: trips/Alpine_Lakes_Grand_Slam.csv
 
 Items:
     Total: 96
@@ -65,77 +64,6 @@ Categories:
     Medicine: 9
     Miscellaneous: 8
     Sanitation: 11
-    Sleeping: 7
------------------------------------
-
-Trip: Desolation_Wilderness.csv
-
-Items:
-    Total: 61
-    Base: 43
-    Worn: 14
-    Food: 4
-
-Weight (lbs):
-    Total: 8.11
-    Base: 4.52
-    Worn: 3.29
-    Food: 0.3
-    No Data: 23
-
-Cost ($):
-    Total: 3,679.30
-    Base: 2,049.38
-    Worn: 1,493.50
-    Food: 136.42
-    No Data: 23
-
-Categories:
-    Clothing: 6
-    Electronics: 8
-    Feet: 3
-    Food: 4
-    Hiking: 5
-    Human Flaws: 3
-    Kitchen: 6
-    Medicine: 6
-    Miscellaneous: 6
-    Sanitation: 7
-    Sleeping: 7
------------------------------------
-
-Trip: Wonderland.csv
-
-Items:
-    Total: 77
-    Base: 62
-    Worn: 15
-    Food: 0
-
-Weight (lbs):
-    Total: 9.75
-    Base: 5.21
-    Worn: 4.54
-    Food: 0.0
-    No Data: 33
-
-Cost ($):
-    Total: 4,421.29
-    Base: 2,362.48
-    Worn: 2,058.81
-    Food: 0
-    No Data: 33
-
-Categories:
-    Clothing: 7
-    Electronics: 11
-    Feet: 3
-    Hiking: 4
-    Human Flaws: 6
-    Kitchen: 8
-    Medicine: 10
-    Miscellaneous: 9
-    Sanitation: 12
     Sleeping: 7
 -----------------------------------
 ```
