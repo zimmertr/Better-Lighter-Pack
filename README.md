@@ -2,20 +2,21 @@
 
 ## Summary
 
-I was frustrated with https://ligherpack.com so I made this. 
+I was frustrated with https://ligherpack.com so I made this. Your exported ligherpack CSVs should be compatible. 
 
 <hr>
 
 ## Instructions
 
-1. Create CSV following this format in `trips/`:
+1. Create a CSV file following this format. Reference examples in `./trips/` if necessary:
    ```csv
    Description: 	name,description,quantity,weight,unit,url,price,worn,consumable
-   Data Type:		string,string,integer,float,integer,string,decimal,boolean,boolean
+   Data Type:   string,string,integer,float,integer,string,decimal,string,string
    Requirement: 	optional,optional,required,required,n/a,n/a,required,optional,optional
+   Example: Sun Hat,Clothing,Outdoor Research Sombriolet,1,107.73,g,https://www.rei.com/product/112247/outdoor-research-sombriolet-sun-hat?sku=1122470011,31.49,Worn,
    ```
-
-2. Execute script against directory:
+   
+2. Execute the script against a CSV file or directory containing CSV files:
    ```shell
    # With Python
    ./python main.py trips/

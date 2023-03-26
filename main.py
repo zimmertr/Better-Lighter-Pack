@@ -1,7 +1,7 @@
 import csv, os, sys
 from decimal import *
 
-tripDirectory=sys.argv[1] if len(sys.argv) > 1 else './trips/'
+tripPath=sys.argv[1] if len(sys.argv) > 1 else './trips/'
 tabulation="\n    "
 
 
@@ -20,11 +20,11 @@ def calcTotals(tripItems):
     for item in tripItems:
         isWorn = item[8]
         isFood = item[9]
-        if isWorn.lower() == "true":
+        if isWorn.lower() == "worn":
             worn += 1
-        if isFood.lower() == "true":
+        elif isFood.lower() == "consumable":
             food += 1
-        if all(item != "true" for item in [isWorn.lower(),isFood.lower()]):
+        else:
             base += 1
 
     return( \
@@ -48,9 +48,9 @@ def calcWeight(tripItems):
         isFood = item[9]
 
         if all(val != "" for val in [quantity, value]):
-            if isWorn.lower() == "true":
+            if isWorn.lower() == "worn":
                 worn += int(quantity) * float(value)
-            elif isFood.lower() == "true":
+            elif isFood.lower() == "consumable":
                 food += int(quantity) * float(value)
             else:
                 base += int(quantity) * float(value)
@@ -81,9 +81,9 @@ def calcCost(tripItems):
         isFood = item[9]
 
         if all(val != "" for val in [quantity, value]):
-            if isWorn.lower() == "true":
+            if isWorn.lower() == "worn":
                 worn += int(quantity) * Decimal(value)
-            elif isFood.lower() == "true":
+            elif isFood.lower() == "consumable":
                 food += int(quantity) * Decimal(value)
             else:
                 base += int(quantity) * Decimal(value)
@@ -134,8 +134,11 @@ def nullValueFormat(value):
 def main():
     listOfTrips = []
 
-    for file in os.listdir(tripDirectory):
-        listOfTrips.append((file,parseCSV(tripDirectory + file)))
+    if os.path.isdir(tripPath):
+        for file in os.listdir(tripPath):
+            listOfTrips.append((file,parseCSV(tripPath + file)))
+    elif os.path.isfile(tripPath):
+        listOfTrips.append((tripPath,parseCSV(tripPath)))
 
     for trip in listOfTrips:
         tripName = trip[0]
