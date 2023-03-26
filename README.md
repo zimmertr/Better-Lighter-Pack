@@ -36,61 +36,42 @@ I was frustrated with https://lighterpack.com so I made this CLI tool. Your expo
 $> python main.py trips/Alpine_Lakes_Grand_Slam.csv
 Trip: trips/Alpine_Lakes_Grand_Slam.csv
 
-Total Items:
-    Total:   96
-    Base:    59
-    Worn:    15
-    Food:    22
+Category     Count
+----------  -------
+Base          59
+Worn          15
+Food          22
+Total         96
 
-Total Weight:
-    Total:   34.08lbs
-    Base:    19.04lbs
-    Worn:    5.73lbs
-    Food:    9.32lbs
-    No Data: 20
+Category     Weight (lbs)
+----------  --------------
+Base            19.04
+Worn             5.73
+Food             9.32
+Total           34.08
+No Data: 20
 
-Total Cost:
-    Total:   $5,168.36
-    Base:    $2,388.72
-    Worn:    $2,218.51
-    Food:    $561.13
-    No Data: 36
+Category    Value
+----------  ---------
+Base        $2,388.72
+Worn        $2,218.51
+Food        $561.13
+Total       $5,168.36
+No Data: 36
 
-Total Categories:
-    Clothing: 7
-        Weight:   3.4lbs
-        Value:    $349.42
-    Electronics: 9
-        Weight:   2.41lbs
-        Value:    $2,160.90
-    Feet: 3
-        Weight:   1.59lbs
-        Value:    $136.70
-    Food: 22
-        Weight:   5.28lbs
-        Value:    $224.01
-    Hiking: 5
-        Weight:   5.37lbs
-        Value:    $349.92
-    Human Flaws: 6
-        Weight:   0.08lbs
-        Value:    $104.28
-    Kitchen: 9
-        Weight:   2.32lbs
-        Value:    $363.20
-    Medicine: 9
-        Weight:   1.55lbs
-        Value:    $21.16
-    Miscellaneous: 8
-        Weight:   0.41lbs
-        Value:    $43.21
-    Sanitation: 11
-        Weight:   0.11lbs
-        Value:    $7.99
-    Sleeping: 7
-        Weight:   6.39lbs
-        Value:    $921.53
------------------------------------
+Category        Count    Weight (lbs)   Value
+-------------  -------  --------------  ---------
+Clothing          7          3.4        $349.42
+Electronics       9          2.41       $2,160.90
+Feet              3          1.59       $136.70
+Food             22          5.28       $224.01
+Hiking            5          5.37       $349.92
+Human Flaws       6          0.08       $104.28
+Kitchen           9          2.32       $363.20
+Medicine          9          1.55       $21.16
+Miscellaneous     8          0.41       $43.21
+Sanitation       11          0.11       $7.99
+Sleeping          7          6.39       $921.53
 ```
 
 

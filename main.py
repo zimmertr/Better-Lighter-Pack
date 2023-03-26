@@ -1,8 +1,10 @@
 import csv, os, sys
 from decimal import *
+from tabulate import tabulate
+from collections import defaultdict
 
-TRIP_PATH=sys.argv[1] if len(sys.argv) > 1 else './trips/'
-TABULATION="\n    "
+TRIP_PATH = sys.argv[1] if len(sys.argv) > 1 else './trips/'
+TABULATION = "\n    "
 
 
 def parseCSV(file):
@@ -12,9 +14,9 @@ def parseCSV(file):
 
 
 def calcTotals(tripItems):
-    base=0
-    worn=0
-    food=0
+    base = 0
+    worn = 0
+    food = 0
 
     for item in tripItems:
         isWorn = item[8].lower()
@@ -24,19 +26,22 @@ def calcTotals(tripItems):
         food += bool(isFood)
         base += not isWorn and not isFood
 
-    return ( "\n" +
-        f"    Total:   {len(tripItems)}\n"
-        f"    Base:    {base}\n"
-        f"    Worn:    {worn}\n"
-        f"    Food:    {food}"
-    )
+    table = [
+        ["Base", base],
+        ["Worn", worn],
+        ["Food", food],
+        ["Total", len(tripItems)]
+    ]
+
+    headers = ["Category", "Count"]
+    return tabulate(table, headers=headers, tablefmt="simple", numalign="center")
 
 
 def calcWeight(tripItems):
-    base=0
-    worn=0
-    food=0
-    nullValues=0
+    base = 0
+    worn = 0
+    food = 0
+    nullValues = 0
 
     for item in tripItems:
         quantity = item[3]
@@ -56,21 +61,22 @@ def calcWeight(tripItems):
 
     total = base + worn + food
 
-    return ( 
-        TABULATION + f"Total:   {gramsToLBS(total)}lbs"
-        + TABULATION + f"Base:    {gramsToLBS(base)}lbs"
-        + TABULATION + f"Worn:    {gramsToLBS(worn)}lbs"
-        + TABULATION + f"Food:    {gramsToLBS(food)}lbs"
-        + nullValueFormat(nullValues)
-    )
+    table = [
+        ["Base", gramsToLBS(base)],
+        ["Worn", gramsToLBS(worn)],
+        ["Food", gramsToLBS(food)],
+        ["Total", gramsToLBS(total)]
+    ]
+
+    headers = ["Category", "Weight (lbs)"]
+    return tabulate(table, headers=headers, tablefmt="simple", numalign="center") + nullValueFormat(nullValues)
 
 
 def calcCost(tripItems):
-    total=0
-    base=0
-    worn=0
-    food=0
-    nullValues=0
+    base = 0
+    worn = 0
+    food = 0
+    nullValues = 0
 
     for item in tripItems:
         quantity = item[3]
@@ -88,43 +94,40 @@ def calcCost(tripItems):
         else:
             nullValues += 1
 
-        total = base + worn + food
+    total = base + worn + food
 
-    return (
-        TABULATION + f"Total:   ${total:,.2f}"
-        + TABULATION + f"Base:    ${base:,.2f}"
-        + TABULATION + f"Worn:    ${worn:,.2f}"
-        + TABULATION + f"Food:    ${food:,.2f}"
-        + nullValueFormat(nullValues)
-    )
+    table = [
+        ["Base", "${:,.2f}".format(base)],
+        ["Worn", "${:,.2f}".format(worn)],
+        ["Food", "${:,.2f}".format(food)],
+        ["Total", "${:,.2f}".format(total)]
+    ]
+
+    headers = ["Category", "Value"]
+    return tabulate(table, headers=headers, tablefmt="simple", numalign="center") + nullValueFormat(nullValues)
 
 
 def calcCategories(tripItems):
-    tmpList={}
-    resultList = ""
-    nullValues=0
+    tmpList = defaultdict(lambda: {"count": 0, "weight": 0, "value": 0})
+    table = []
 
     for item in tripItems:
         category = item[1]
-        weight=item[4]
-        cost=item[7]        
-        
-        if category not in tmpList:
-            tmpList[category] = {"count": 1, "weight": 0, "value": 0}
-        else:
-            tmpList[category]["count"] += 1
+        weight = item[4]
+        cost = item[7]
 
-        if weight:
-            tmpList[category]["weight"] += float(weight)
-        if cost:
-            tmpList[category]["value"] += Decimal(cost)
+        tmpList[category]["count"] += 1
+        tmpList[category]["weight"] += float(weight or 0)
+        tmpList[category]["value"] += Decimal(cost or 0)
 
     for category, info in tmpList.items():
-        resultList += TABULATION + f"{category}: {info['count']}"
-        resultList += f"\n        Weight:   {gramsToLBS(info['weight'])}lbs"
-        resultList += f"\n        Value:    ${info['value']:,.2f}"
+        count = info['count']
+        weight = gramsToLBS(info['weight'])
+        value = "${:,.2f}".format(info['value'])
+        table.append([category, count, weight, value])
 
-    return resultList
+    headers = ["Category", "Count", "Weight (lbs)", "Value"]
+    return tabulate(table, headers=headers, tablefmt="simple", numalign="center")
 
 
 def gramsToLBS(grams):
@@ -133,7 +136,7 @@ def gramsToLBS(grams):
 
 def nullValueFormat(value):
     if value and value > 0:
-        return f"{TABULATION}\033[91mNo Data: {value}\033[0m"
+        return f"\n\033[91mNo Data: {value}\033[0m"
     return ""
 
 
@@ -146,12 +149,11 @@ def buildTripList(TRIP_PATH):
 
 def calculateTrip(trip):
     tripName, tripItems = trip
-    print("Trip: " + tripName)
-    print("\nTotal Items: " + calcTotals(tripItems))
-    print("\nTotal Weight: " + calcWeight(tripItems))
-    print("\nTotal Cost: " + calcCost(tripItems))
-    print("\nTotal Categories: " + calcCategories(tripItems))
-    print("-----------------------------------\n")
+    print("Trip: " + tripName + "\n")
+    print(calcTotals(tripItems) + "\n")
+    print(calcWeight(tripItems) + "\n")
+    print(calcCost(tripItems) + "\n")
+    print(calcCategories(tripItems) + "\n")
 
 
 def main():
@@ -159,6 +161,8 @@ def main():
 
     for trip in listOfTrips:
         calculateTrip(trip)
+        if len(listOfTrips) > 1:
+            print("********************************************************\n")            
 
 
 if __name__ == "__main__":
