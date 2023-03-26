@@ -20,9 +20,9 @@ def calcTotals(tripItems):
     for item in tripItems:
         isWorn = item[8]
         isFood = item[9]
-        if isWorn.lower() == "worn":
+        if isWorn.lower() != "":
             worn += 1
-        elif isFood.lower() == "consumable":
+        elif isFood.lower() != "":
             food += 1
         else:
             base += 1
@@ -48,9 +48,9 @@ def calcWeight(tripItems):
         isFood = item[9]
 
         if all(val != "" for val in [quantity, value]):
-            if isWorn.lower() == "worn":
+            if isWorn.lower() != "":
                 worn += int(quantity) * float(value)
-            elif isFood.lower() == "consumable":
+            elif isFood.lower() != "":
                 food += int(quantity) * float(value)
             else:
                 base += int(quantity) * float(value)
@@ -81,9 +81,9 @@ def calcCost(tripItems):
         isFood = item[9]
 
         if all(val != "" for val in [quantity, value]):
-            if isWorn.lower() == "worn":
+            if isWorn.lower() != "":
                 worn += int(quantity) * Decimal(value)
-            elif isFood.lower() == "consumable":
+            elif isFood.lower() != "":
                 food += int(quantity) * Decimal(value)
             else:
                 base += int(quantity) * Decimal(value)
