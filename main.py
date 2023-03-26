@@ -43,7 +43,7 @@ def calcWeight(tripItems):
 
     for item in tripItems:
         quantity = item[3]
-        value = item[7]
+        value = item[4]
         isWorn = item[8]
         isFood = item[9]
 
@@ -101,23 +101,35 @@ def calcCost(tripItems):
 
 
 def calcCategories(tripItems):
-    categoryList = {}
+    tmpList = {}
     nullValues = 0
 
     for item in tripItems:
         category = item[1]
-        if category not in categoryList:
-            categoryList[category] = 1
+        if category not in tmpList:
+            tmpList[category] = 1
         else:
-            categoryList[category] += 1
+            tmpList[category] += 1
 
-    resultList = [[category, count] for category, count in categoryList.items()]
+    categoryList = [[category, count] for category, count in tmpList.items()]
 
-    returnList = ""
-    for result in resultList:
-        returnList += tabulation + result[0] + ": " + str(result[1])
+    resultList = ""
+    for result in categoryList:
+        resultList += tabulation + result[0] + ": " + str(result[1])
+        
+        categoryWeight = 0
+        categoryValue = 0
+        for item in tripItems:
+            if result[0] == item[1]:
+                if item[4] != "":
+                    categoryWeight += float(item[4])
+                if item[7] != "":
+                    categoryValue += Decimal(item[7])
 
-    return str(returnList)
+        resultList += "\n\tWeight:\t" + gramsToLBS(categoryWeight)
+        resultList += "\n\tValue:\t" + str(round(categoryValue,2))
+
+    return resultList
 
 
 def gramsToLBS(grams):

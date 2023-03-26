@@ -40,11 +40,11 @@ Items:
     Food: 22
 
 Weight (lbs):
-    Total: 11.39
-    Base: 5.27
-    Worn: 4.89
-    Food: 1.24
-    No Data: 36
+    Total: 34.08
+    Base: 19.04
+    Worn: 5.73
+    Food: 9.32
+    No Data: 20
 
 Cost ($):
     Total: 5,168.36
@@ -55,16 +55,38 @@ Cost ($):
 
 Categories:
     Clothing: 7
+	Weight:	3.4
+	Value:	349.42
     Electronics: 9
+	Weight:	2.41
+	Value:	2160.90
     Feet: 3
+	Weight:	1.59
+	Value:	136.70
     Food: 22
+	Weight:	5.28
+	Value:	224.01
     Hiking: 5
+	Weight:	5.37
+	Value:	349.92
     Human Flaws: 6
+	Weight:	0.08
+	Value:	104.28
     Kitchen: 9
+	Weight:	2.32
+	Value:	363.20
     Medicine: 9
+	Weight:	1.55
+	Value:	21.16
     Miscellaneous: 8
+	Weight:	0.41
+	Value:	43.21
     Sanitation: 11
+	Weight:	0.11
+	Value:	7.99
     Sleeping: 7
+	Weight:	6.39
+	Value:	921.53
 -----------------------------------
 ```
 
