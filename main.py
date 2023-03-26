@@ -28,10 +28,10 @@ def calcTotals(tripItems):
             base += 1
 
     return( \
-        tabulation + "Total: " + str(len(tripItems)) + \
-        tabulation + "Base: " + str(base) + \
-        tabulation + "Worn: " + str(worn) + \
-        tabulation + "Food: " + str(food))
+        tabulation + "Total:   " + str(len(tripItems)) + \
+        tabulation + "Base:    " + str(base) + \
+        tabulation + "Worn:    " + str(worn) + \
+        tabulation + "Food:    " + str(food))
 
 
 def calcWeight(tripItems):
@@ -60,10 +60,10 @@ def calcWeight(tripItems):
         total = (base + worn + food)
 
     return ( \
-        tabulation + "Total: " + gramsToLBS(total) + \
-        tabulation + "Base: " + gramsToLBS(base) + \
-        tabulation + "Worn: " + gramsToLBS(worn) + \
-        tabulation + "Food: " + gramsToLBS(food) + \
+        tabulation + "Total:   " + gramsToLBS(total) + "lbs" + \
+        tabulation + "Base:    " + gramsToLBS(base) + "lbs" +  \
+        tabulation + "Worn:    " + gramsToLBS(worn) + "lbs" +  \
+        tabulation + "Food:    " + gramsToLBS(food) + "lbs" +  \
         nullValueFormat(nullValues))
 
 
@@ -93,10 +93,10 @@ def calcCost(tripItems):
         total = (base + worn + food)
 
     return ( \
-        tabulation + "Total: " + str(f'{total:,}') + \
-        tabulation + "Base: " + str(f'{base:,}') + \
-        tabulation + "Worn: " + str(f'{worn:,}') + \
-        tabulation + "Food: " + str(f'{food:,}') + \
+        tabulation + "Total:   " + "${:,.2f}".format(total) + \
+        tabulation + "Base:    " + "${:,.2f}".format(base) + \
+        tabulation + "Worn:    " + "${:,.2f}".format(worn) + \
+        tabulation + "Food:    " + "${:,.2f}".format(food) + \
         nullValueFormat(nullValues))
 
 
@@ -126,8 +126,8 @@ def calcCategories(tripItems):
                 if item[7] != "":
                     categoryValue += Decimal(item[7])
 
-        resultList += "\n\tWeight:\t" + gramsToLBS(categoryWeight)
-        resultList += "\n\tValue:\t" + str(round(categoryValue,2))
+        resultList += "\n\tWeight:\t" + gramsToLBS(categoryWeight) + "lbs"
+        resultList += "\n\tValue:\t" + "${:,.2f}".format(round(categoryValue,2))
 
     return resultList
 
@@ -158,7 +158,7 @@ def main():
         print("Trip: " + tripName)
         print("\nItems: " + calcTotals(tripItems))
         print("\nWeight (lbs): " + calcWeight(tripItems))
-        print("\nCost ($): " + calcCost(tripItems))
+        print("\nCost: " + calcCost(tripItems))
         print("\nCategories: " + calcCategories(tripItems))
         print("-----------------------------------\n")
 

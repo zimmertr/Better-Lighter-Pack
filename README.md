@@ -34,59 +34,59 @@ $> python main.py trips/Alpine_Lakes_Grand_Slam.csv
 Trip: trips/Alpine_Lakes_Grand_Slam.csv
 
 Items:
-    Total: 96
-    Base: 59
-    Worn: 15
-    Food: 22
+    Total:   96
+    Base:    59
+    Worn:    15
+    Food:    22
 
 Weight (lbs):
-    Total: 34.08
-    Base: 19.04
-    Worn: 5.73
-    Food: 9.32
+    Total:   34.08lbs
+    Base:    19.04lbs
+    Worn:    5.73lbs
+    Food:    9.32lbs
     No Data: 20
 
-Cost ($):
-    Total: 5,168.36
-    Base: 2,388.72
-    Worn: 2,218.51
-    Food: 561.13
+Cost:
+    Total:   $5,168.36
+    Base:    $2,388.72
+    Worn:    $2,218.51
+    Food:    $561.13
     No Data: 36
 
 Categories:
     Clothing: 7
-	Weight:	3.4
-	Value:	349.42
+    Weight: 3.4lbs
+    Value:  $349.42
     Electronics: 9
-	Weight:	2.41
-	Value:	2160.90
+    Weight: 2.41lbs
+    Value:  $2,160.90
     Feet: 3
-	Weight:	1.59
-	Value:	136.70
+    Weight: 1.59lbs
+    Value:  $136.70
     Food: 22
-	Weight:	5.28
-	Value:	224.01
+    Weight: 5.28lbs
+    Value:  $224.01
     Hiking: 5
-	Weight:	5.37
-	Value:	349.92
+    Weight: 5.37lbs
+    Value:  $349.92
     Human Flaws: 6
-	Weight:	0.08
-	Value:	104.28
+    Weight: 0.08lbs
+    Value:  $104.28
     Kitchen: 9
-	Weight:	2.32
-	Value:	363.20
+    Weight: 2.32lbs
+    Value:  $363.20
     Medicine: 9
-	Weight:	1.55
-	Value:	21.16
+    Weight: 1.55lbs
+    Value:  $21.16
     Miscellaneous: 8
-	Weight:	0.41
-	Value:	43.21
+    Weight: 0.41lbs
+    Value:  $43.21
     Sanitation: 11
-	Weight:	0.11
-	Value:	7.99
+    Weight: 0.11lbs
+    Value:  $7.99
     Sleeping: 7
-	Weight:	6.39
-	Value:	921.53
+    Weight: 6.39lbs
+    Value:  $921.53
 -----------------------------------
 ```
 
