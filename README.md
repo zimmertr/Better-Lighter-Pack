@@ -72,5 +72,12 @@ Sanitation       11          0.11       $7.99
 Sleeping          7          6.39       $921.53
 ```
 
+<hr>
 
+## TODO
+
+* Add configurable sorting
+* Support configurable weight units
+* Add configurable lists (EG: top 3 heaviest per category)
+* Configure Dockerfile to receive file by argument instead of volume mount
 
