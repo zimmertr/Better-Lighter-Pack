@@ -1,5 +1,10 @@
 # Better Ligher Pack
 
+* [Summary](#Summary)
+* [Instructions](#Instructions)
+* [Examples](#Examples)
+* [TODO](#TODO)
+
 ## Summary
 
 I was frustrated with https://lighterpack.com so I made this CLI tool. Your exported ligherpack CSVs should be compatible. 
@@ -28,7 +33,7 @@ I was frustrated with https://lighterpack.com so I made this CLI tool. Your expo
 
 <hr>
 
-## Example:
+## Examples:
 
 ```shell
 $> python main.py trips/Alpine_Lakes_Grand_Slam.csv
