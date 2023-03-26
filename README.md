@@ -19,6 +19,9 @@ I was frustrated with https://lighterpack.com so I made this CLI tool. Your expo
 2. Execute the script against a CSV file or directory containing CSV files:
    ```shell
    # With Python
+   ./python main.py trips/Alpine_Lakes_Grand_Slam.csv
+   
+   # With Python
    ./python main.py trips/
    
    # With Docker
